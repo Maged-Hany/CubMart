@@ -70,21 +70,96 @@ const makeErrBox = (error) => `
 `;
 
 const sale = `
-<div style="
-    background-color: #111827;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 10px;
-    color: #fffdfcff;
+<style>
+@keyframes slideInUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+</style>
+<div id="sale-toast" style="
     position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25) !important;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1050;
+    max-width: 320px;
+    background: rgba(17, 24, 39, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 20px;
+    color: #ffffff;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+    font-family: 'Inter', -apple-system, sans-serif;
+    animation: slideInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 ">
-    <h2>SALE !</h2>
-    <p>SALE: Liverpool 26/27 kit</p>
-    <a href="#buy-liverpool" class="btn btn-primary">50% OFF</a>
+    <!-- Close button -->
+    <button onclick="const t = document.getElementById('sale-toast'); t.style.opacity='0'; t.style.transform='translateY(15px)'; setTimeout(()=>t.remove(), 300)" style="
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        background: transparent;
+        border: none;
+        color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        padding: 4px;
+        font-size: 14px;
+        line-height: 1;
+        transition: color 0.2s;
+        outline: none;
+    " onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='rgba(255, 255, 255, 0.5)'">
+        ✕
+    </button>
+
+    <!-- Badge -->
+    <span style="
+        display: inline-block;
+        background: #e11d48;
+        color: #ffffff;
+        font-size: 9px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        padding: 4px 10px;
+        border-radius: 50rem;
+        margin-bottom: 12px;
+    ">Limited Offer</span>
+
+    <!-- Content -->
+    <h3 style="
+        font-size: 15px;
+        font-weight: 700;
+        margin: 0 0 6px 0;
+        letter-spacing: 0.5px;
+        color: #ffffff;
+        font-family: 'Inter', sans-serif;
+    ">Exclusive Drop Sale!</h3>
+    <p style="
+        font-size: 13px;
+        color: #9ca3af;
+        margin: 0 0 16px 0;
+        line-height: 1.5;
+        font-family: 'Inter', sans-serif;
+    ">Get <strong>50% OFF</strong> the new Liverpool 25/26 Home Kit. Limited stock remaining.</p>
+
+    <!-- Action Button -->
+    <a href="#buy-liverpool" onclick="document.getElementById('sale-toast').remove()" style="
+        display: block;
+        text-align: center;
+        background: #ffffff;
+        color: #111827;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 10px 16px;
+        border-radius: 8px;
+        letter-spacing: 0.5px;
+        transition: background 0.2s;
+        font-family: 'Inter', sans-serif;
+    " onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#ffffff'">
+        Claim 50% Discount
+    </a>
 </div>
 `;
 
