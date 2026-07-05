@@ -18,10 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Get new source and execute smooth fade transition
                 const newSrc = option.getAttribute('data-src');
                 bannerImg.style.opacity = '0';
-                
+
                 setTimeout(() => {
                     bannerImg.src = newSrc;
-                bannerImg.style.opacity = window.innerWidth > 991 ? '0.7' : '0.35';
+                    bannerImg.style.opacity = window.innerWidth > 991 ? '0.7' : '0.35';
                 }, 300); // Matches the CSS 0.3s transition duration
             });
         });
@@ -48,4 +48,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
         observer.observe(sportsSection);
     }
+});
+
+// Helper function to create error box dynamically when needed without throwing ReferenceError on page load
+const makeErrBox = (error) => `
+<div style="
+    background-color: #111827;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 10px;
+    color: #fffdfcff;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25) !important;
+">
+    <h2>Error ${error ? error.name : 'Unknown'}</h2>
+    <p>${error ? error.message : 'An error occurred'}</p>
+</div>
+`;
+
+const sale = `
+<div style="
+    background-color: #111827;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 10px;
+    color: #fffdfcff;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25) !important;
+">
+    <h2>SALE !</h2>
+    <p>SALE: Liverpool 26/27 kit</p>
+    <a href="#buy-liverpool" class="btn btn-primary">50% OFF</a>
+</div>
+`;
+
+// Insert the sale box safely without rebuilding the DOM, preserving existing event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    document.body.insertAdjacentHTML('beforeend', sale);
 });
