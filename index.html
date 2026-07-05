@@ -240,6 +240,130 @@
             fill: #e11d48;
             stroke: #e11d48;
         }
+
+        /* Smooth Dark Theme Transitions */
+        body {
+            transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1), color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #ffffff;
+        }
+
+        header {
+            transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        header .nav-link {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Elements under dark theme */
+        body.dark-theme {
+            background-color: #0b0f19 !important; /* deep slate black */
+            color: #f3f4f6 !important;
+        }
+
+        body.dark-theme header {
+            background-color: #111827 !important;
+            border-color: #1f2937 !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2) !important;
+        }
+
+        body.dark-theme header .nav-link {
+            color: #9ca3af !important;
+        }
+
+        body.dark-theme header .nav-link:hover {
+            color: #ffffff !important;
+            background-color: #1f2937 !important;
+        }
+
+        body.dark-theme header .nav-link.active {
+            color: #ffffff !important;
+            background-color: #e11d48 !important; /* Crimson theme accent */
+        }
+
+        /* Classic wear headings transition */
+        body.dark-theme .container span,
+        body.dark-theme .container h2,
+        body.dark-theme .container h3,
+        body.dark-theme .container h4 {
+            color: #ffffff !important;
+            transition: color 0.6s ease;
+        }
+
+        /* Classic wear product cards dark theme */
+        body.dark-theme .product-card {
+            background-color: #111827 !important;
+            border-color: #1f2937 !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+        }
+
+        body.dark-theme .product-card:hover {
+            box-shadow: 0 20px 45px rgba(0,0,0,0.4) !important;
+        }
+
+        body.dark-theme .product-card .card-body h3 {
+            color: #ffffff !important;
+        }
+
+        body.dark-theme .product-card .card-body span {
+            color: #e2e8f0 !important;
+        }
+
+        body.dark-theme .action-btn-floating {
+            background-color: #1f2937 !important;
+            border-color: #374151 !important;
+            color: #ffffff !important;
+        }
+
+        body.dark-theme .action-btn-floating:hover {
+            background-color: #ffffff !important;
+            color: #111827 !important;
+            border-color: #ffffff !important;
+        }
+
+        /* Customer Reviews dark theme cards */
+        body.dark-theme div[style*="background: #ffffff"] {
+            background-color: #111827 !important;
+            border-color: #1f2937 !important;
+            transition: background-color 0.6s ease, border-color 0.6s ease;
+        }
+        body.dark-theme div[style*="background: #ffffff"] span,
+        body.dark-theme div[style*="background: #ffffff"] p,
+        body.dark-theme div[style*="background: #ffffff"] strong {
+            color: #f3f4f6 !important;
+        }
+        body.dark-theme div[style*="background: #ffffff"] p {
+            color: #d1d5db !important;
+        }
+
+        /* Footer styling on dark theme */
+        body.dark-theme footer {
+            background-color: #0b0f19 !important;
+            border-color: #1f2937 !important;
+            transition: background-color 0.6s ease, border-color 0.6s ease;
+        }
+        body.dark-theme footer h4 {
+            color: #ffffff !important;
+        }
+        body.dark-theme footer p,
+        body.dark-theme footer a {
+            color: #9ca3af !important;
+        }
+        body.dark-theme footer a:hover {
+            color: #ffffff !important;
+        }
+        body.dark-theme footer input {
+            background-color: #111827 !important;
+            border-color: #1f2937 !important;
+            color: #ffffff !important;
+        }
+        body.dark-theme footer button {
+            background-color: #ffffff !important;
+            color: #111827 !important;
+        }
+        body.dark-theme footer button:hover {
+            background-color: #e2e8f0 !important;
+        }
     </style>
 </head>
 
@@ -451,7 +575,7 @@
         </div>
 
         <!-- Sports Wear Section: Hero Banner -->
-        <div style="background: #111827; padding: 0; margin: 0; overflow: hidden;">
+        <div id="sports-wear-section" style="background: #111827; padding: 0; margin: 0; overflow: hidden;">
             <div class="sports-banner-container">
                 <img id="wirtz-banner-img" src="florian-wirtz.jpeg" alt="Florian Wirtz modelling the Liverpool 25/26 Adidas home kit"
                     class="sports-banner-img">

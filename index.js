@@ -21,9 +21,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 setTimeout(() => {
                     bannerImg.src = newSrc;
-                    bannerImg.style.opacity = window.innerWidth > 991 ? '0.7' : '0.35';
+                bannerImg.style.opacity = window.innerWidth > 991 ? '0.7' : '0.35';
                 }, 300); // Matches the CSS 0.3s transition duration
             });
         });
+    }
+
+    // 2. Dark Mode Scroll Transition Observer
+    const sportsSection = document.getElementById('sports-wear-section');
+    if (sportsSection && 'IntersectionObserver' in window) {
+        const observerOptions = {
+            root: null, // viewport
+            rootMargin: '-20% 0px -40% 0px', // trigger when the sports wear section occupies a significant portion of the screen
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    document.body.classList.add('dark-theme');
+                } else {
+                    // If we scroll back up (the section exits bottom), transition back to light mode
+                    if (entry.boundingClientRect.top > 0) {
+                        document.body.classList.remove('dark-theme');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        observer.observe(sportsSection);
     }
 });
