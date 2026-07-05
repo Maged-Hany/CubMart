@@ -141,10 +141,10 @@ const sale = `
         margin: 0 0 16px 0;
         line-height: 1.5;
         font-family: 'Inter', sans-serif;
-    ">Get <strong>50% OFF</strong> the new Liverpool 25/26 Home Kit. Limited stock remaining.</p>
+    ">Get <strong>50% OFF</strong> the new Liverpool 26/27 Home Kit. Limited stock remaining.</p>
 
     <!-- Action Button -->
-    <a href="#buy-liverpool" onclick="document.getElementById('sale-toast').remove()" style="
+    <a href="#sports-wear-section" onclick="document.getElementById('sale-toast').remove()" style="
         display: block;
         text-align: center;
         background: #ffffff;
