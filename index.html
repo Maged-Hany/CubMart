@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CubMart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .nav-link {
+            color: #4b5563 !important;
+            font-weight: 500;
+            padding: 8px 16px !important;
+            border-radius: 50rem;
+            transition: all 0.2s ease-in-out;
+            background-color: transparent !important;
+        }
+
+        .nav-link:hover {
+            color: #111827 !important;
+            background-color: #f3f4f6 !important;
+        }
+
+        .nav-link.active {
+            color: #ffffff !important;
+            background-color: #111827 !important;
+            font-weight: 600;
+        }
+
+        .nav-link:focus,
+        .nav-link:active {
+            box-shadow: none !important;
+            outline: none !important;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .shop-btn:hover {
+            opacity: 0.85;
+            color: #ffffff !important;
+        }
+
+        .product-card {
+            border-radius: 16px;
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .product-card .card-img-wrapper {
+            overflow: hidden;
+            background: #f5f5f5;
+        }
+
+        .product-card .card-img-wrapper img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .card-img-wrapper img {
+            transform: scale(1.08);
+        }
+
+        .product-card .card-body {
+            padding: 20px;
+        }
+
+        .color-swatch {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #e5e7eb;
+            transition: all 0.2s ease;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.15);
+        }
+
+        .color-swatch.active {
+            border: 2px solid #111827;
+            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #111827;
+        }
+
+        /* Floating action buttons on hover of product cards */
+        .floating-actions-container {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 5;
+            opacity: 0;
+            transform: translateX(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .product-card:hover .floating-actions-container {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .action-btn-floating {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #111827;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            transition: all 0.2s ease-in-out;
+            outline: none;
+            padding: 0;
+        }
+
+        .action-btn-floating:hover {
+            background: #111827;
+            color: #ffffff;
+            border-color: #111827;
+        }
+
+        .action-btn-floating:hover .heart-icon {
+            fill: #e11d48;
+            stroke: #e11d48;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="bg-white border-bottom py-2 sticky-top"
+        style="top: 0; z-index: 1020; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="#">
+                <img src="gemini-svg.svg" alt="CUBMART-Logo" style="height: 40px; width: auto;">
+            </a>
+            <nav class="nav gap-2">
+                <a href="#" class="nav-link active">New Arrivals</a>
+                <a href="#" class="nav-link">Shop</a>
+                <a href="#" class="nav-link">Sale</a>
+                <a href="#" class="nav-link">Accessories</a>
+                <a href="#" class="nav-link">About Us</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="w-100"
+            style="background: linear-gradient(135deg, #1a1a1a 0%, #111111 50%, #1a1a1a 100%); display: flex; justify-content: center; align-items: center; min-height: 85vh; padding: 40px 60px; gap: 50px;">
+            <!-- Left Panel: Editorial Text + CTA -->
+            <div style="flex: 1; max-width: 320px; animation: fadeInLeft 0.8s ease-out;">
+                <p
+                    style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #f97316; letter-spacing: 4px; text-transform: uppercase; margin: 0 0 16px 0;">
+                    Summer 2026 Collection</p>
+                <h2
+                    style="font-family: 'Georgia', 'Times New Roman', serif; font-size: 42px; font-weight: 700; color: #ffffff; line-height: 1.2; margin: 0 0 20px 0;">
+                    Redefine<br>Your<br>Everyday.</h2>
+                <p
+                    style="font-family: 'Inter', sans-serif; font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7; margin: 0 0 32px 0;">
+                    Premium streetwear designed for those who move with purpose and dress with intention.</p>
+                <a href="#" class="shop-btn"
+                    style="display: inline-block; padding: 14px 36px; background: #ffffff; color: #111111; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; text-decoration: none; border-radius: 50rem; letter-spacing: 1px; transition: all 0.3s ease;">SHOP
+                    NOW →</a>
+            </div>
+            <!-- Center: Hero Image -->
+            <div style="position: relative; display: inline-block; flex-shrink: 0; animation: fadeInUp 0.8s ease-out;">
+                <img src="lookbook.jpeg" alt="Look book"
+                    style="max-height: 78vh; max-width: 100%; object-fit: contain; display: block; border-radius: 16px;">
+                <div
+                    style="position: absolute; bottom: 0; left: 0; right: 0; padding: 48px 36px; border-radius: 0 0 16px 16px; background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);">
+                    <h1
+                        style="font-family: 'Georgia', 'Times New Roman', serif; font-size: 36px; font-weight: 700; color: #ffffff; margin: 0 0 10px 0; letter-spacing: 1px;">
+                        Wear Your Confidence.</h1>
+                    <p
+                        style="font-family: 'Inter', -apple-system, sans-serif; font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.85); margin: 0; max-width: 420px; line-height: 1.6;">
+                        Discover thoughtfully designed clothing that blends comfort, quality, and modern style —
+                        curated
+                        for everyday living.</p>
+                </div>
+            </div>
+            <!-- Right Panel: Stats & Social Proof -->
+            <div
+                style="flex: 1; max-width: 260px; display: flex; flex-direction: column; gap: 36px; animation: fadeInRight 0.8s ease-out;">
+                <div style="border-left: 2px solid rgba(255,255,255,0.15); padding-left: 20px;">
+                    <span
+                        style="font-family: 'Georgia', serif; font-size: 40px; font-weight: 700; color: #ffffff;">250+</span>
+                    <p
+                        style="font-family: 'Inter', sans-serif; font-size: 12px; color: rgba(255,255,255,0.5); margin: 4px 0 0 0; letter-spacing: 2px; text-transform: uppercase;">
+                        Unique Pieces</p>
+                </div>
+                <div style="border-left: 2px solid rgba(255,255,255,0.15); padding-left: 20px;">
+                    <span
+                        style="font-family: 'Georgia', serif; font-size: 40px; font-weight: 700; color: #ffffff;">12K</span>
+                    <p
+                        style="font-family: 'Inter', sans-serif; font-size: 12px; color: rgba(255,255,255,0.5); margin: 4px 0 0 0; letter-spacing: 2px; text-transform: uppercase;">
+                        Happy Customers</p>
+                </div>
+                <div style="border-left: 2px solid rgba(255,255,255,0.15); padding-left: 20px;">
+                    <span
+                        style="font-family: 'Georgia', serif; font-size: 40px; font-weight: 700; color: #ffffff;">New</span>
+                    <p
+                        style="font-family: 'Inter', sans-serif; font-size: 12px; color: rgba(255,255,255,0.5); margin: 4px 0 0 0; letter-spacing: 2px; text-transform: uppercase;">
+                        Drops Weekly</p>
+                </div>
+            </div>
+        </div>
+        <div class="container py-4 d-flex justify-content-between align-items-center">
+            <div>
+                <span style="font-size: 36px; font-weight: 700; color: #111827;">Classic Wear</span>
+                <p style="font-size: 13px; color: #9ca3af; margin: 4px 0 0 0; font-weight: 400;">Curated picks with
+                    the best designs and highest ratings.</p>
+            </div>
+            <nav class="nav gap-2">
+                <a href="#" class="nav-link active">All</a>
+                <a href="#" class="nav-link">Top Rated</a>
+                <a href="#" class="nav-link">New Arrivals</a>
+                <a href="#" class="nav-link">On Sale</a>
+            </nav>
+        </div>
+        <!-- Product Cards Grid -->
+        <div class="container pb-5">
+            <div class="row g-4">
+                <!-- Card 1: Bomber Jacket -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="product-card">
+                        <div class="card-img-wrapper" style="position: relative;">
+                            <span
+                                style="position: absolute; top: 12px; left: 12px; background: #e11d48; color: #ffffff; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase; z-index: 2;">Sale
+                                -100 EGP</span>
+                            <div class="floating-actions-container">
+                                <button class="action-btn-floating" title="Add to Wishlist">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                        stroke-linejoin="round" class="heart-icon">
+                                        <path
+                                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                        </path>
+                                    </svg>
+                                </button>
+                                <button class="action-btn-floating" title="Add to Cart">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <circle cx="9" cy="21" r="1"></circle>
+                                        <circle cx="20" cy="21" r="1"></circle>
+                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <img src="bomber-charcoal.jpeg" alt="Charcoal Bomber Jacket">
+                        </div>
+                        <div class="card-body">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <div>
+                                    <h3
+                                        style="font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; color: #111827; margin: 0;">
+                                        Charcoal Bomber Jacket</h3>
+                                    <p
+                                        style="font-family: 'Inter', sans-serif; font-size: 13px; color: #9ca3af; margin: 4px 0 0 0;">
+                                        Outerwear</p>
+                                </div>
+                                <div style="text-align: right;">
+                                    <span
+                                        style="font-family: 'Inter', sans-serif; font-size: 13px; text-decoration: line-through; color: #9ca3af; display: block; line-height: 1;">560
+                                        EGP</span>
+                                    <span
+                                        style="font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 700; color: #e11d48; display: block; margin-top: 4px; line-height: 1;">460
+                                        EGP</span>
+                                </div>
+                            </div>
+                            <!-- Color Swatches -->
+                            <div style="margin-top: 14px; display: flex; align-items: center; gap: 8px;">
+                                <span
+                                    style="font-family: 'Inter', sans-serif; font-size: 12px; color: #9ca3af;">Color:</span>
+                                <span class="color-swatch active" style="background: #3a3a3a;" title="Charcoal"></span>
+                                <span class="color-swatch" style="background: #1a1a1a;" title="Black"></span>
+                                <span class="color-swatch" style="background: #556b2f;" title="Olive"></span>
+                            </div>
+                            <div
+                                style="margin-top: 14px; display: flex; justify-content: space-between; align-items: center;">
+                                <div style="color: #f97316; font-size: 14px; letter-spacing: 2px;">★★★★★</div>
+                                <a href="#" id="buy-bomber" class="shop-btn"
+                                    style="display: inline-block; padding: 10px 28px; background: #111827; color: #ffffff; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; text-decoration: none; border-radius: 50rem; letter-spacing: 0.5px; transition: all 0.3s ease;">Buy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2: Indigo Jeans -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="product-card">
+                        <div class="card-img-wrapper">
+                            <div class="card-img-wrapper" style="position: relative;">
+                                <div class="floating-actions-container">
+                                    <button class="action-btn-floating" title="Add to Wishlist">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                            stroke-linecap="round" stroke-linejoin="round" class="heart-icon">
+                                            <path
+                                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                    <button class="action-btn-floating" title="Add to Cart">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="9" cy="21" r="1"></circle>
+                                            <circle cx="20" cy="21" r="1"></circle>
+                                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <img src="jeans-indigo.jpeg" alt="Indigo Slim Fit Jeans">
+                            </div>
+                            <div class="card-body">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                    <div>
+                                        <h3
+                                            style="font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; color: #111827; margin: 0;">
+                                            Indigo Slim Fit Jeans</h3>
+                                        <p
+                                            style="font-family: 'Inter', sans-serif; font-size: 13px; color: #9ca3af; margin: 4px 0 0 0;">
+                                            Bottoms</p>
+                                    </div>
+                                    <span
+                                        style="font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 700; color: #111827;">480
+                                        EGP</span>
+                                </div>
+                                <!-- Color Swatches -->
+                                <div style="margin-top: 14px; display: flex; align-items: center; gap: 8px;">
+                                    <span
+                                        style="font-family: 'Inter', sans-serif; font-size: 12px; color: #9ca3af;">Color:</span>
+                                    <span class="color-swatch active" style="background: #1a3a5c;"
+                                        title="Indigo"></span>
+                                    <span class="color-swatch" style="background: #1a1a1a;" title="Black"></span>
+                                    <span class="color-swatch" style="background: #87ceeb;" title="Light Wash"></span>
+                                </div>
+                                <div
+                                    style="margin-top: 14px; display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="color: #f97316; font-size: 14px; letter-spacing: 2px;">★★★★☆</div>
+                                    <a href="#" id="buy-jeans" class="shop-btn"
+                                        style="display: inline-block; padding: 10px 28px; background: #111827; color: #ffffff; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; text-decoration: none; border-radius: 50rem; letter-spacing: 0.5px; transition: all 0.3s ease;">Buy</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sports Wear Section: Hero Banner -->
+        <div style="background: #111827; padding: 0; margin: 0; overflow: hidden;">
+            <div style="position: relative; display: flex; align-items: center; min-height: 600px; overflow: hidden;">
+                <img src="florian-wirtz.jpeg" alt="Florian Wirtz Liverpool Kit"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 15%; opacity: 0.45;">
+                <div
+                    style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(17,24,39,0.95) 0%, rgba(17,24,39,0.7) 40%, transparent 75%);">
+                </div>
+                <div class="container" style="position: relative; z-index: 2; padding: 60px 0;">
+                    <div style="max-width: 480px;">
+                        <span
+                            style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; color: #e11d48; letter-spacing: 5px; text-transform: uppercase;">New
+                            Season 25/26</span>
+                        <h2
+                            style="font-family: 'Georgia', 'Times New Roman', serif; font-size: 48px; font-weight: 700; color: #ffffff; line-height: 1.15; margin: 20px 0 16px 0;">
+                            Sports Wear</h2>
+                        <p
+                            style="font-family: 'Inter', sans-serif; font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.7; margin: 0 0 32px 0;">
+                            Official club jerseys and premium athletic wear. Designed for the pitch, built for the
+                            streets.</p>
+                        <a href="#" class="shop-btn"
+                            style="display: inline-block; padding: 14px 36px; background: #e11d48; color: #ffffff; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; text-decoration: none; border-radius: 50rem; letter-spacing: 1px; transition: all 0.3s ease;">EXPLORE
+                            COLLECTION →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sports Wear Products Grid -->
+        <div class="container py-4 d-flex justify-content-between align-items-center">
+            <div>
+                <span style="font-size: 36px; font-weight: 700; color: #111827;">Sports Wear</span>
+                <p style="font-size: 13px; color: #9ca3af; margin: 4px 0 0 0; font-weight: 400;">Official kits &
+                    athletic essentials for every matchday.</p>
+            </div>
+            <nav class="nav gap-2">
+                <a href="#" class="nav-link active">All</a>
+                <a href="#" class="nav-link">Football</a>
+                <a href="#" class="nav-link">Training</a>
+                <a href="#" class="nav-link">Accessories</a>
+            </nav>
+        </div>
+        <div class="container pb-5">
+            <div class="row g-4">
+                <!-- Card: Liverpool 25/26 Home Kit -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="product-card">
+                        <div class="card-img-wrapper" style="position: relative;">
+                            <span
+                                style="position: absolute; top: 12px; left: 12px; background: #111827; color: #ffffff; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase; z-index: 2;">New</span>
+                            <div class="floating-actions-container">
+                                <button class="action-btn-floating" title="Add to Wishlist">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                        stroke-linejoin="round" class="heart-icon">
+                                        <path
+                                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                        </path>
+                                    </svg>
+                                </button>
+                                <button class="action-btn-floating" title="Add to Cart">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <circle cx="9" cy="21" r="1"></circle>
+                                        <circle cx="20" cy="21" r="1"></circle>
+                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <img src="liverpool-kit.jpeg" alt="Liverpool FC 25/26 Home Kit">
+                        </div>
+                        <div class="card-body">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <div>
+                                    <h3
+                                        style="font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; color: #111827; margin: 0;">
+                                        Liverpool FC 25/26 Home Kit</h3>
+                                    <p
+                                        style="font-family: 'Inter', sans-serif; font-size: 13px; color: #9ca3af; margin: 4px 0 0 0;">
+                                        Football Jersey</p>
+                                </div>
+                                <span
+                                    style="font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 700; color: #111827;">850
+                                    EGP</span>
+                            </div>
+                            <!-- Color Swatches -->
+                            <div style="margin-top: 14px; display: flex; align-items: center; gap: 8px;">
+                                <span
+                                    style="font-family: 'Inter', sans-serif; font-size: 12px; color: #9ca3af;">Color:</span>
+                                <span class="color-swatch active" style="background: #c0392b;" title="Home Red"></span>
+                                <span class="color-swatch" style="background: #ecf0f1;" title="Away White"></span>
+                                <span class="color-swatch" style="background: #1a1a1a;" title="Third Black"></span>
+                            </div>
+                            <!-- Size Selection -->
+                            <div style="margin-top: 14px; display: flex; align-items: center; gap: 6px;">
+                                <span
+                                    style="font-family: 'Inter', sans-serif; font-size: 12px; color: #9ca3af;">Size:</span>
+                                <span
+                                    style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #111827; padding: 4px 10px; border: 1px solid #e5e7eb; border-radius: 4px; cursor: pointer;">S</span>
+                                <span
+                                    style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #ffffff; padding: 4px 10px; background: #111827; border: 1px solid #111827; border-radius: 4px; cursor: pointer;">M</span>
+                                <span
+                                    style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #111827; padding: 4px 10px; border: 1px solid #e5e7eb; border-radius: 4px; cursor: pointer;">L</span>
+                                <span
+                                    style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #111827; padding: 4px 10px; border: 1px solid #e5e7eb; border-radius: 4px; cursor: pointer;">XL</span>
+                            </div>
+                            <div
+                                style="margin-top: 14px; display: flex; justify-content: space-between; align-items: center;">
+                                <div style="color: #f97316; font-size: 14px; letter-spacing: 2px;">★★★★★</div>
+                                <a href="#" id="buy-liverpool" class="shop-btn"
+                                    style="display: inline-block; padding: 10px 28px; background: #e11d48; color: #ffffff; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; text-decoration: none; border-radius: 50rem; letter-spacing: 0.5px; transition: all 0.3s ease;">Buy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- What Our Customers Say: Section Intro -->
+        <div
+            style="background: #f9fafb; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; padding: 64px 0 0 0;">
+            <div class="container" style="text-align: center; max-width: 640px; margin: 0 auto;">
+                <!-- Decorative Quote Icon -->
+                <div style="margin-bottom: 20px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                        stroke="#e5e7eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z">
+                        </path>
+                        <path
+                            d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z">
+                        </path>
+                    </svg>
+                </div>
+                <span
+                    style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; color: #f97316; letter-spacing: 5px; text-transform: uppercase;">Trusted
+                    by Thousands</span>
+                <h2
+                    style="font-family: 'Georgia', 'Times New Roman', serif; font-size: 38px; font-weight: 700; color: #111827; line-height: 1.3; margin: 16px 0 12px 0;">
+                    What Our Customers Say</h2>
+                <p
+                    style="font-family: 'Inter', sans-serif; font-size: 15px; color: #9ca3af; line-height: 1.7; margin: 0 0 48px 0;">
+                    Real reviews from real people — because your confidence in us matters most.</p>
+            </div>
+
+            <!-- Ratings & Reviews Content -->
+            <div class="container" style="padding-bottom: 64px;">
+                <div class="row g-5">
+                    <!-- Left: Summary -->
+                    <div class="col-lg-4">
+                        <div
+                            style="text-align: center; padding: 36px; background: #ffffff; border-radius: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.04); border: 1px solid #f0f0f0;">
+                            <span
+                                style="font-family: 'Georgia', serif; font-size: 72px; font-weight: 700; color: #111827; line-height: 1;">4.8</span>
+                            <div style="margin: 14px 0 10px 0; color: #f97316; font-size: 24px; letter-spacing: 4px;">
+                                ★★★★★</div>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #9ca3af; margin: 0;">
+                                Based on <strong style="color: #374151;">12,400</strong> reviews</p>
+                        </div>
+
+                        <!-- Rating Bars -->
+                        <div
+                            style="margin-top: 24px; display: flex; flex-direction: column; gap: 10px; background: #ffffff; padding: 24px; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.04); border: 1px solid #f0f0f0;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span
+                                    style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: #111827; width: 14px;">5</span>
+                                <span style="color: #f97316; font-size: 13px;">★</span>
+                                <div
+                                    style="flex: 1; height: 8px; background: #f3f4f6; border-radius: 50rem; overflow: hidden;">
+                                    <div
+                                        style="width: 78%; height: 100%; background: linear-gradient(90deg, #111827, #374151); border-radius: 50rem;">
+                                    </div>
+                                </div>
+                                <span
+                                    style="font-family: 'Inter', sans-serif; font-size: 12px; color: #9ca3af; width: 32px; text-align: right;">78%</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span
+                                    style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: #111827; width: 14px;">4</span>
+                                <span style="color: #f97316; font-size: 13px;">★</span>
+                                <div
+                                    style="flex: 1; height: 8px; background: #f3f4f6; border-radius: 50rem; overflow: hidden;">
+                                    <div
+                                        style="width: 15%; height: 100%; background: linear-gradient(90deg, #111827, #374151); border-radius: 50rem;">
+                                    </div>
+                                </div>
+                                <span
+                                    style="font-family: 'Inter', sans-serif; font-size: 12px; color: #9ca3af; width: 32px; text-align: right;">15%</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span
+                                    style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: #111827; width: 14px;">3</span>
+                                <span style="color: #f97316; font-size: 13px;">★</span>
+                                <div
+                                    style="flex: 1; height: 8px; background: #f3f4f6; border-radius: 50rem; overflow: hidden;">
+                                    <div
+                                        style="width: 4%; height: 100%; background: linear-gradient(90deg, #111827, #374151); border-radius: 50rem;">
+                                    </div>
+                                </div>
+                                <span
+                                    style="font-family: 'Inter', sans-serif; font-size: 12px; color: #9ca3af; width: 32px; text-align: right;">4%</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span
+                                    style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: #111827; width: 14px;">2</span>
+                                <span style="color: #f97316; font-size: 13px;">★</span>
+                                <div
+                                    style="flex: 1; height: 8px; background: #f3f4f6; border-radius: 50rem; overflow: hidden;">
+                                    <div
+                                        style="width: 2%; height: 100%; background: linear-gradient(90deg, #111827, #374151); border-radius: 50rem;">
+                                    </div>
+                                </div>
+                                <span
+                                    style="font-family: 'Inter', sans-serif; font-size: 12px; color: #9ca3af; width: 32px; text-align: right;">2%</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span
+                                    style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: #111827; width: 14px;">1</span>
+                                <span style="color: #f97316; font-size: 13px;">★</span>
+                                <div
+                                    style="flex: 1; height: 8px; background: #f3f4f6; border-radius: 50rem; overflow: hidden;">
+                                    <div
+                                        style="width: 1%; height: 100%; background: linear-gradient(90deg, #111827, #374151); border-radius: 50rem;">
+                                    </div>
+                                </div>
+                                <span
+                                    style="font-family: 'Inter', sans-serif; font-size: 12px; color: #9ca3af; width: 32px; text-align: right;">1%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Individual Reviews -->
+                    <div class="col-lg-8">
+                        <!-- Review 1: Sara M. -->
+                        <div
+                            style="padding: 28px; background: #ffffff; border: 1px solid #f0f0f0; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.04);">
+                            <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 14px;">
+                                <div
+                                    style="width: 44px; height: 44px; border-radius: 50%; background: #e0e7ff; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 700; color: #4338CA;">
+                                    S</div>
+                                <div style="flex: 1;">
+                                    <span
+                                        style="font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; color: #111827;">Sara
+                                        M.</span>
+                                    <p
+                                        style="font-family: 'Inter', sans-serif; font-size: 12px; color: #9ca3af; margin: 2px 0 0 0;">
+                                        Verified Purchase · 3 days ago</p>
+                                </div>
+                                <div style="color: #f97316; font-size: 13px; letter-spacing: 2px;">★★★★★</div>
+                            </div>
+                            <p
+                                style="font-family: 'Georgia', serif; font-size: 15px; color: #374151; line-height: 1.7; margin: 0 0 16px 0; font-style: italic;">
+                                "Absolutely love this tee! The oversized fit is perfect and the cotton is incredibly
+                                soft. Worth every penny — already ordered two more in different colors."</p>
+                            <div style="display: flex; align-items: center; justify-content: flex-end;">
+                                <div style="display: flex; gap: 16px;">
+                                    <span
+                                        style="font-family: 'Inter', sans-serif; font-size: 12px; color: #9ca3af;">Size
+                                        bought: <strong style="color: #374151;">M</strong></span>
+                                    <span
+                                        style="font-family: 'Inter', sans-serif; font-size: 12px; color: #9ca3af;">Color:
+                                        <strong style="color: #374151;">Cloud White</strong></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Review 2: Ahmed K. -->
+                        <div
+                            style="padding: 28px; background: #ffffff; border: 1px solid #f0f0f0; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.04);">
+                            <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 14px;">
+                                <div
+                                    style="width: 44px; height: 44px; border-radius: 50%; background: #fef3c7; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 700; color: #b45309;">
+                                    A</div>
+                                <div style="flex: 1;">
+                                    <span
+                                        style="font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; color: #111827;">Ahmed
+                                        K.</span>
+                                    <p
+                                        style="font-family: 'Inter', sans-serif; font-size: 12px; color: #9ca3af; margin: 2px 0 0 0;">
+                                        Verified Purchase · 1 week ago</p>
+                                </div>
+                                <div style="color: #f97316; font-size: 13px; letter-spacing: 2px;">★★★★★</div>
+                            </div>
+                            <p
+                                style="font-family: 'Georgia', serif; font-size: 15px; color: #374151; line-height: 1.7; margin: 0 0 16px 0; font-style: italic;">
+                                "Great quality and fast shipping. The fit runs slightly large so consider sizing down if
+                                you prefer a more tailored look. Overall very happy with the purchase."</p>
+                            <div style="display: flex; align-items: center; justify-content: flex-end;">
+                                <div style="display: flex; gap: 16px;">
+                                    <span
+                                        style="font-family: 'Inter', sans-serif; font-size: 12px; color: #9ca3af;">Size
+                                        bought: <strong style="color: #374151;">L</strong></span>
+                                    <span
+                                        style="font-family: 'Inter', sans-serif; font-size: 12px; color: #9ca3af;">Color:
+                                        <strong style="color: #374151;">Navy</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer style="background: #ffffff; border-top: 1px solid #e5e7eb; padding: 64px 0 0 0; margin-top: 0;">
+        <div class="container">
+            <div class="row g-5 pb-5">
+                <!-- Column 1: Logo + Description -->
+                <div class="col-lg-4">
+                    <img src="gemini-svg.svg" alt="CubMart Logo"
+                        style="height: 50px; width: auto; margin-bottom: 20px;">
+                    <p
+                        style="font-family: 'Inter', sans-serif; font-size: 14px; color: #9ca3af; line-height: 1.7; margin: 0; max-width: 300px;">
+                        A modern e-commerce clothing store — academy project focused on best UI/UX design practices.
+                    </p>
+                </div>
+                <!-- Column 2: Shop -->
+                <div class="col-6 col-lg-2">
+                    <h4
+                        style="font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: #111827; margin: 0 0 20px 0; letter-spacing: 1px; text-transform: uppercase;">
+                        Shop</h4>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px;">
+                        <li><a href="#"
+                                style="font-family: 'Inter', sans-serif; font-size: 14px; color: #6b7280; text-decoration: none; transition: color 0.2s;"
+                                onmouseover="this.style.color='#111827'" onmouseout="this.style.color='#6b7280'">New
+                                Arrivals</a></li>
+                        <li><a href="#"
+                                style="font-family: 'Inter', sans-serif; font-size: 14px; color: #6b7280; text-decoration: none; transition: color 0.2s;"
+                                onmouseover="this.style.color='#111827'" onmouseout="this.style.color='#6b7280'">Best
+                                Sellers</a></li>
+                        <li><a href="#"
+                                style="font-family: 'Inter', sans-serif; font-size: 14px; color: #6b7280; text-decoration: none; transition: color 0.2s;"
+                                onmouseover="this.style.color='#111827'" onmouseout="this.style.color='#6b7280'">On
+                                Sale</a></li>
+                        <li><a href="#"
+                                style="font-family: 'Inter', sans-serif; font-size: 14px; color: #6b7280; text-decoration: none; transition: color 0.2s;"
+                                onmouseover="this.style.color='#111827'" onmouseout="this.style.color='#6b7280'">All
+                                Products</a></li>
+                    </ul>
+                </div>
+                <!-- Column 3: Help -->
+                <div class="col-6 col-lg-2">
+                    <h4
+                        style="font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: #111827; margin: 0 0 20px 0; letter-spacing: 1px; text-transform: uppercase;">
+                        Help</h4>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px;">
+                        <li><a href="#"
+                                style="font-family: 'Inter', sans-serif; font-size: 14px; color: #6b7280; text-decoration: none; transition: color 0.2s;"
+                                onmouseover="this.style.color='#111827'"
+                                onmouseout="this.style.color='#6b7280'">Shipping Info</a></li>
+                        <li><a href="#"
+                                style="font-family: 'Inter', sans-serif; font-size: 14px; color: #6b7280; text-decoration: none; transition: color 0.2s;"
+                                onmouseover="this.style.color='#111827'"
+                                onmouseout="this.style.color='#6b7280'">Returns</a></li>
+                        <li><a href="#"
+                                style="font-family: 'Inter', sans-serif; font-size: 14px; color: #6b7280; text-decoration: none; transition: color 0.2s;"
+                                onmouseover="this.style.color='#111827'" onmouseout="this.style.color='#6b7280'">Size
+                                Guide</a></li>
+                        <li><a href="#"
+                                style="font-family: 'Inter', sans-serif; font-size: 14px; color: #6b7280; text-decoration: none; transition: color 0.2s;"
+                                onmouseover="this.style.color='#111827'" onmouseout="this.style.color='#6b7280'">Contact
+                                Us</a></li>
+                    </ul>
+                </div>
+                <!-- Column 4: Stay Updated -->
+                <div class="col-lg-4">
+                    <h4
+                        style="font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: #111827; margin: 0 0 20px 0; letter-spacing: 1px; text-transform: uppercase;">
+                        Stay Updated</h4>
+                    <p
+                        style="font-family: 'Inter', sans-serif; font-size: 14px; color: #9ca3af; line-height: 1.6; margin: 0 0 16px 0;">
+                        Get notified about new drops and exclusive offers.</p>
+                    <div style="display: flex; gap: 0; max-width: 340px;">
+                        <input type="email" placeholder="Email"
+                            style="flex: 1; padding: 12px 16px; border: 1px solid #e5e7eb; border-right: none; border-radius: 50rem 0 0 50rem; background: #f9fafb; color: #111827; font-family: 'Inter', sans-serif; font-size: 13px; outline: none;">
+                        <button
+                            style="padding: 12px 20px; background: #111827; color: #ffffff; border: none; border-radius: 0 50rem 50rem 0; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s;"
+                            onmouseover="this.style.background='#374151'"
+                            onmouseout="this.style.background='#111827'">→</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Bar -->
+        <div style="border-top: 1px solid #e5e7eb; padding: 24px 0;">
+            <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #9ca3af; margin: 0;">© 2026
+                    CubMart — Academy Project. For educational purposes only.</p>
+                <div style="display: flex; gap: 24px;">
+                    <a href="#"
+                        style="font-family: 'Inter', sans-serif; font-size: 13px; color: #9ca3af; text-decoration: none; transition: color 0.2s;"
+                        onmouseover="this.style.color='#111827'" onmouseout="this.style.color='#9ca3af'">Privacy</a>
+                    <a href="#"
+                        style="font-family: 'Inter', sans-serif; font-size: 13px; color: #9ca3af; text-decoration: none; transition: color 0.2s;"
+                        onmouseover="this.style.color='#111827'" onmouseout="this.style.color='#9ca3af'">Terms</a>
+                    <a href="#"
+                        style="font-family: 'Inter', sans-serif; font-size: 13px; color: #9ca3af; text-decoration: none; transition: color 0.2s;"
+                        onmouseover="this.style.color='#111827'"
+                        onmouseout="this.style.color='#9ca3af'">Accessibility</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
