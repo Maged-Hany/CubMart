@@ -127,6 +127,27 @@
             box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #111827;
         }
 
+        /* Gallery Option CSS for interactive selector */
+        .gallery-option {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 3/2;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-option:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .gallery-option.active {
+            border: 2.5px solid #e11d48 !important;
+            box-shadow: 0 8px 24px rgba(225, 29, 72, 0.3);
+        }
+
         /* Floating action buttons on hover of product cards */
         .floating-actions-container {
             position: absolute;
@@ -317,14 +338,7 @@
                                         EGP</span>
                                 </div>
                             </div>
-                            <!-- Color Swatches -->
-                            <div style="margin-top: 14px; display: flex; align-items: center; gap: 8px;">
-                                <span
-                                    style="font-family: 'Inter', sans-serif; font-size: 12px; color: #9ca3af;">Color:</span>
-                                <span class="color-swatch active" style="background: #3a3a3a;" title="Charcoal"></span>
-                                <span class="color-swatch" style="background: #1a1a1a;" title="Black"></span>
-                                <span class="color-swatch" style="background: #556b2f;" title="Olive"></span>
-                            </div>
+
                             <div
                                 style="margin-top: 14px; display: flex; justify-content: space-between; align-items: center;">
                                 <div style="color: #f97316; font-size: 14px; letter-spacing: 2px;">★★★★★</div>
@@ -376,15 +390,7 @@
                                         style="font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 700; color: #111827;">480
                                         EGP</span>
                                 </div>
-                                <!-- Color Swatches -->
-                                <div style="margin-top: 14px; display: flex; align-items: center; gap: 8px;">
-                                    <span
-                                        style="font-family: 'Inter', sans-serif; font-size: 12px; color: #9ca3af;">Color:</span>
-                                    <span class="color-swatch active" style="background: #1a3a5c;"
-                                        title="Indigo"></span>
-                                    <span class="color-swatch" style="background: #1a1a1a;" title="Black"></span>
-                                    <span class="color-swatch" style="background: #87ceeb;" title="Light Wash"></span>
-                                </div>
+
                                 <div
                                     style="margin-top: 14px; display: flex; justify-content: space-between; align-items: center;">
                                     <div style="color: #f97316; font-size: 14px; letter-spacing: 2px;">★★★★☆</div>
@@ -401,8 +407,8 @@
         <!-- Sports Wear Section: Hero Banner -->
         <div style="background: #111827; padding: 0; margin: 0; overflow: hidden;">
             <div style="position: relative; display: flex; align-items: center; min-height: 600px; overflow: hidden;">
-                <img src="florian-wirtz.jpeg" alt="Florian Wirtz modelling the Liverpool 25/26 Adidas home kit"
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; opacity: 0.65;">
+                <img id="wirtz-banner-img" src="florian-wirtz.jpeg" alt="Florian Wirtz modelling the Liverpool 25/26 Adidas home kit"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; opacity: 0.65; transition: opacity 0.3s ease;">
                 <div
                     style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(17,24,39,0.92) 0%, rgba(17,24,39,0.6) 40%, rgba(17,24,39,0.2) 75%);">
                 </div>
@@ -431,41 +437,51 @@
         <div style="background: #0f172a; padding: 48px 0; overflow: hidden;">
             <div class="container">
                 <div style="text-align: center; margin-bottom: 32px;">
-                    <span style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; color: #e11d48; letter-spacing: 5px; text-transform: uppercase;">More Ideas</span>
-                    <h3 style="font-family: 'Georgia', 'Times New Roman', serif; font-size: 32px; font-weight: 700; color: #ffffff; margin: 12px 0 8px 0;">Wirtz Gallery — Pick Your Favorite</h3>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: rgba(255,255,255,0.5); margin: 0;">Alternative shots from the 25/26 Adidas kit launch. Swap any into the banner above.</p>
+                    <span
+                        style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; color: #e11d48; letter-spacing: 5px; text-transform: uppercase;">More
+                        Ideas</span>
+                    <h3
+                        style="font-family: 'Georgia', 'Times New Roman', serif; font-size: 32px; font-weight: 700; color: #ffffff; margin: 12px 0 8px 0;">
+                        Wirtz Gallery — Pick Your Favorite</h3>
+                    <p
+                        style="font-family: 'Inter', sans-serif; font-size: 14px; color: rgba(255,255,255,0.5); margin: 0;">
+                        Alternative shots from the 25/26 Adidas kit launch. Swap any into the banner above.</p>
                 </div>
                 <div class="row g-3" style="max-width: 1200px; margin: 0 auto;">
                     <!-- Option 1: Current banner (solo 1) -->
-                    <div class="col-md-6 col-lg-3">
-                        <div style="position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 3/2; border: 2px solid #e11d48;">
-                            <img src="florian-wirtz.jpeg" alt="Wirtz home kit solo — current banner" style="width: 100%; height: 100%; object-fit: cover;">
-                            <span style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 24px 12px 10px; font-family: 'Inter', sans-serif; font-size: 11px; color: #fff; font-weight: 600;">Option 1 — Current Banner</span>
+                    <div class="col-md-4">
+                        <div class="gallery-option active" data-src="florian-wirtz.jpeg">
+                            <img src="florian-wirtz.jpeg" alt="Wirtz home kit solo — current banner"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                            <span
+                                style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 24px 12px 10px; font-family: 'Inter', sans-serif; font-size: 11px; color: #fff; font-weight: 600;">Option
+                                1 — Current Banner</span>
                         </div>
                     </div>
                     <!-- Option 2: Solo 2 -->
-                    <div class="col-md-6 col-lg-3">
-                        <div style="position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 3/2; border: 1px solid rgba(255,255,255,0.1);">
-                            <img src="wirtz-option-2.jpeg" alt="Wirtz home kit alternative solo shot" style="width: 100%; height: 100%; object-fit: cover;">
-                            <span style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 24px 12px 10px; font-family: 'Inter', sans-serif; font-size: 11px; color: #fff; font-weight: 600;">Option 2 — Alt Solo</span>
+                    <div class="col-md-4">
+                        <div class="gallery-option" data-src="wirtz-option-2.jpeg">
+                            <img src="wirtz-option-2.jpeg" alt="Wirtz home kit alternative solo shot"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                            <span
+                                style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 24px 12px 10px; font-family: 'Inter', sans-serif; font-size: 11px; color: #fff; font-weight: 600;">Option
+                                2 — Alt Solo</span>
                         </div>
                     </div>
                     <!-- Option 3: Wirtz + Lundgaard -->
-                    <div class="col-md-6 col-lg-3">
-                        <div style="position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 3/2; border: 1px solid rgba(255,255,255,0.1);">
-                            <img src="wirtz-option-3.jpeg" alt="Wirtz and Lundgaard modelling home kit" style="width: 100%; height: 100%; object-fit: cover;">
-                            <span style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 24px 12px 10px; font-family: 'Inter', sans-serif; font-size: 11px; color: #fff; font-weight: 600;">Option 3 — Duo Shot</span>
-                        </div>
-                    </div>
-                    <!-- Option 4: 4K Wallpaper -->
-                    <div class="col-md-6 col-lg-3">
-                        <div style="position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 3/2; border: 1px solid rgba(255,255,255,0.1);">
-                            <img src="wirtz-option-4-wallpaper.jpeg" alt="Wirtz 4K wallpaper in Liverpool home kit" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;">
-                            <span style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 24px 12px 10px; font-family: 'Inter', sans-serif; font-size: 11px; color: #fff; font-weight: 600;">Option 4 — 4K Wallpaper</span>
+                    <div class="col-md-4">
+                        <div class="gallery-option" data-src="wirtz-option-3.jpeg">
+                            <img src="wirtz-option-3.jpeg" alt="Wirtz and Lundgaard modelling home kit"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                            <span
+                                style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 24px 12px 10px; font-family: 'Inter', sans-serif; font-size: 11px; color: #fff; font-weight: 600;">Option
+                                3 — Duo Shot</span>
                         </div>
                     </div>
                 </div>
-                <p style="text-align: center; margin-top: 24px; font-family: 'Inter', sans-serif; font-size: 12px; color: rgba(255,255,255,0.35);">All photos from the official Liverpool FC × Adidas 25/26 kit launch campaign.</p>
+                <p
+                    style="text-align: center; margin-top: 24px; font-family: 'Inter', sans-serif; font-size: 12px; color: rgba(255,255,255,0.35);">
+                    All photos from the official Liverpool FC × Adidas 25/26 kit launch campaign.</p>
             </div>
         </div>
 
@@ -519,7 +535,7 @@
                                 <div>
                                     <h3
                                         style="font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; color: #111827; margin: 0;">
-                                        Liverpool FC 25/26 Home Kit</h3>
+                                        Liverpool FC 26/27 Home Kit</h3>
                                     <p
                                         style="font-family: 'Inter', sans-serif; font-size: 13px; color: #9ca3af; margin: 4px 0 0 0;">
                                         Football Jersey</p>
@@ -527,14 +543,6 @@
                                 <span
                                     style="font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 700; color: #111827;">850
                                     EGP</span>
-                            </div>
-                            <!-- Color Swatches -->
-                            <div style="margin-top: 14px; display: flex; align-items: center; gap: 8px;">
-                                <span
-                                    style="font-family: 'Inter', sans-serif; font-size: 12px; color: #9ca3af;">Color:</span>
-                                <span class="color-swatch active" style="background: #c0392b;" title="Home Red"></span>
-                                <span class="color-swatch" style="background: #ecf0f1;" title="Away White"></span>
-                                <span class="color-swatch" style="background: #1a1a1a;" title="Third Black"></span>
                             </div>
                             <!-- Size Selection -->
                             <div style="margin-top: 14px; display: flex; align-items: center; gap: 6px;">
@@ -848,6 +856,7 @@
             </div>
         </div>
     </footer>
+    <script src="index.js"></script>
 </body>
 
 </html>
