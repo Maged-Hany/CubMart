@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 setTimeout(() => {
                     bannerImg.src = newSrc;
-                    bannerImg.style.opacity = '0.65';
+                    bannerImg.style.opacity = window.innerWidth > 991 ? '0.7' : '0.35';
                 }, 300); // Matches the CSS 0.3s transition duration
             });
         });

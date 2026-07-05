@@ -95,7 +95,8 @@
 
         .product-card .card-img-wrapper img {
             width: 100%;
-            height: 320px;
+            height: auto;
+            aspect-ratio: 3/4;
             object-fit: cover;
             transition: transform 0.5s ease;
         }
@@ -132,10 +133,17 @@
             position: relative;
             border-radius: 12px;
             overflow: hidden;
-            aspect-ratio: 3/2;
+            aspect-ratio: 3/4;
             border: 2px solid rgba(255, 255, 255, 0.1);
             cursor: pointer;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-option img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 15%;
         }
 
         .gallery-option:hover {
@@ -146,6 +154,44 @@
         .gallery-option.active {
             border: 2.5px solid #e11d48 !important;
             box-shadow: 0 8px 24px rgba(225, 29, 72, 0.3);
+        }
+
+        /* Sports Wear Hero Banner responsive image layout */
+        .sports-banner-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            min-height: 600px;
+            overflow: hidden;
+        }
+
+        .sports-banner-img {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .sports-banner-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, #111827 40%, rgba(17,24,39,0.7) 65%, transparent 100%);
+            z-index: 1;
+        }
+
+        @media (max-width: 991px) {
+            .sports-banner-img {
+                width: 100%;
+                opacity: 0.35;
+            }
+            .sports-banner-overlay {
+                background: linear-gradient(0deg, rgba(17,24,39,0.95) 0%, rgba(17,24,39,0.7) 100%);
+            }
         }
 
         /* Floating action buttons on hover of product cards */
@@ -406,12 +452,10 @@
 
         <!-- Sports Wear Section: Hero Banner -->
         <div style="background: #111827; padding: 0; margin: 0; overflow: hidden;">
-            <div style="position: relative; display: flex; align-items: center; min-height: 600px; overflow: hidden;">
+            <div class="sports-banner-container">
                 <img id="wirtz-banner-img" src="florian-wirtz.jpeg" alt="Florian Wirtz modelling the Liverpool 25/26 Adidas home kit"
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; opacity: 0.65; transition: opacity 0.3s ease;">
-                <div
-                    style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(17,24,39,0.92) 0%, rgba(17,24,39,0.6) 40%, rgba(17,24,39,0.2) 75%);">
-                </div>
+                    class="sports-banner-img">
+                <div class="sports-banner-overlay"></div>
                 <div class="container" style="position: relative; z-index: 2; padding: 60px 0;">
                     <div style="max-width: 480px;">
                         <span
