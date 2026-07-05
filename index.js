@@ -32,8 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sportsSection && 'IntersectionObserver' in window) {
         const observerOptions = {
             root: null, // viewport
-            rootMargin: '-20% 0px -40% 0px', // trigger when the sports wear section occupies a significant portion of the screen
-            threshold: 0
+            rootMargin: '-80px 0px -80px 0px', // trigger offset
+            threshold: 0.1 // triggers when 10% of the section is visible
         };
 
         const observer = new IntersectionObserver((entries) => {
@@ -41,10 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (entry.isIntersecting) {
                     document.body.classList.add('dark-theme');
                 } else {
-                    // If we scroll back up (the section exits bottom), transition back to light mode
-                    if (entry.boundingClientRect.top > 0) {
-                        document.body.classList.remove('dark-theme');
-                    }
+                    document.body.classList.remove('dark-theme');
                 }
             });
         }, observerOptions);
