@@ -350,6 +350,86 @@
             0%, 100% { transform: translateX(-50%) translateY(0); }
             50% { transform: translateX(-50%) translateY(8px); }
         }
+
+        /* Scroll-based color transition */
+        html { scroll-behavior: smooth; }
+        body { transition: background-color 0.6s ease; }
+
+        /* Dark sections */
+        .dark-section {
+            background-color: #0a0a0a !important;
+            color: #ffffff !important;
+        }
+        .dark-section * { color: inherit; }
+        .dark-section .text-muted { color: rgba(255,255,255,0.6) !important; }
+        .dark-section .border-top, .dark-section .border-bottom { border-color: rgba(255,255,255,0.1) !important; }
+
+        /* Header scroll transitions */
+        header {
+            transition: background-color 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease !important;
+        }
+        header.scrolled-dark {
+            background-color: rgba(10,10,10,0.95) !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
+            border-color: rgba(255,255,255,0.08) !important;
+        }
+        header.scrolled-dark .nav-link { color: rgba(255,255,255,0.7) !important; }
+        header.scrolled-dark .nav-link:hover { color: #ffffff !important; }
+        header.scrolled-dark .nav-link.active { color: #ffffff !important; background-color: rgba(255,255,255,0.1) !important; }
+        header.scrolled-dark #logo-img { filter: brightness(0) invert(1); }
+
+        /* Ratings section dark theme */
+        .ratings-dark {
+            background-color: #0a0a0a !important;
+            border-color: rgba(255,255,255,0.08) !important;
+        }
+        .ratings-dark, .ratings-dark * { color: #ffffff !important; }
+        .ratings-dark .text-muted, .ratings-dark [style*="color: #6b7280"], 
+        .ratings-dark [style*="color: #9ca3af"], .ratings-dark [style*="color: #4b5563"] { 
+            color: rgba(255,255,255,0.6) !important; 
+        }
+        .ratings-dark [style*="background: #f3f4f6"] { background-color: rgba(255,255,255,0.08) !important; }
+        .ratings-dark [style*="background: #ffffff"] { background-color: rgba(255,255,255,0.05) !important; }
+        .ratings-dark [style*="border: 1px solid #e5e7eb"] { border-color: rgba(255,255,255,0.1) !important; }
+        .ratings-dark [style*="border-bottom: 1px solid #f0f0f0"] { border-color: rgba(255,255,255,0.08) !important; }
+
+        /* Footer dark theme */
+        .footer-dark { background-color: #0a0a0a !important; border-color: rgba(255,255,255,0.08) !important; }
+        .footer-dark, .footer-dark * { color: #ffffff !important; }
+        .footer-dark .text-muted, .footer-dark [style*="color: #9ca3af"],
+        .footer-dark [style*="color: #6b7280"], .footer-dark [style*="color: #4b5563"] {
+            color: rgba(255,255,255,0.6) !important;
+        }
+        .footer-dark [style*="border-top: 1px solid #e5e7eb"] { border-color: rgba(255,255,255,0.08) !important; }
+        .footer-dark [style*="border: 1px solid #e5e7eb"] { border-color: rgba(255,255,255,0.1) !important; }
+        .footer-dark [style*="background: #f3f4f6"] { background-color: rgba(255,255,255,0.08) !important; }
+        .footer-dark #logo-img { filter: brightness(0) invert(1); }
+        .footer-dark input { background-color: rgba(255,255,255,0.08) !important; border-color: rgba(255,255,255,0.15) !important; color: #ffffff !important; }
+        .footer-dark input::placeholder { color: rgba(255,255,255,0.4) !important; }
+
+        /* Force override inline light colors in dark sections */
+        .ratings-dark [style*="color: #111827"], .footer-dark [style*="color: #111827"] { color: #ffffff !important; }
+        .ratings-dark [style*="color: #374151"], .footer-dark [style*="color: #374151"] { color: rgba(255,255,255,0.8) !important; }
+        .ratings-dark [style*="color: #4b5563"], .footer-dark [style*="color: #4b5563"] { color: rgba(255,255,255,0.7) !important; }
+        .ratings-dark [style*="color: #6b7280"], .footer-dark [style*="color: #6b7280"] { color: rgba(255,255,255,0.6) !important; }
+        .ratings-dark [style*="color: #9ca3af"], .footer-dark [style*="color: #9ca3af"] { color: rgba(255,255,255,0.5) !important; }
+        .ratings-dark [style*="color: #b45309"] { color: #fbbf24 !important; }
+        .ratings-dark [style*="color: #4338CA"] { color: #818cf8 !important; }
+        .ratings-dark [style*="color: #f97316"] { color: #fb923c !important; }
+
+        /* Override background colors in dark sections */
+        .ratings-dark [style*="background: #f3f4f6"], .footer-dark [style*="background: #f3f4f6"] { background: rgba(255,255,255,0.06) !important; }
+        .ratings-dark [style*="background: #ffffff"], .footer-dark [style*="background: #ffffff"] { background: rgba(255,255,255,0.04) !important; }
+        .ratings-dark [style*="background: #fef3c7"] { background: rgba(251,191,36,0.1) !important; }
+        .ratings-dark [style*="background: #e0e7ff"] { background: rgba(129,140,248,0.1) !important; }
+
+        /* Override border colors in dark sections */
+        .ratings-dark [style*="border: 1px solid #e5e7eb"], .footer-dark [style*="border: 1px solid #e5e7eb"] { border-color: rgba(255,255,255,0.1) !important; }
+        .ratings-dark [style*="border-top: 1px solid #e5e7eb"], .footer-dark [style*="border-top: 1px solid #e5e7eb"] { border-color: rgba(255,255,255,0.08) !important; }
+        .ratings-dark [style*="border-bottom: 1px solid #f0f0f0"] { border-color: rgba(255,255,255,0.08) !important; }
+
+        /* Star ratings stay gold in dark */
+        .ratings-dark [style*="color: #facc15"], .ratings-dark [style*="color: #eab308"] { color: #facc15 !important; }
 </style>
 </head>
 
@@ -358,7 +438,7 @@
         style="top: 0; z-index: 1020; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
         <div class="container d-flex align-items-center justify-content-between">
             <a href="#">
-                <img src="gemini-svg.svg" alt="CUBMART-Logo" style="height: 40px; width: auto;">
+                <img src="gemini-svg.svg" alt="CUBMART-Logo" id="logo-img" style="height: 40px; width: auto;">
             </a>
             <nav class="nav gap-2">
                 <a href="#" class="nav-link active">New Arrivals</a>
@@ -733,7 +813,7 @@
 
         <!-- What Our Customers Say: Section Intro -->
         <div
-            style="background: #f9fafb; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; padding: 64px 0 0 0;">
+            class="ratings-dark" style="background: #0a0a0a; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 64px 0 0 0;">
             <div class="container" style="text-align: center; max-width: 640px; margin: 0 auto;">
                 <!-- Decorative Quote Icon -->
                 <div style="margin-bottom: 20px;">
@@ -917,13 +997,12 @@
         </div>
     </main>
     <!-- Footer -->
-    <footer style="background: #ffffff; border-top: 1px solid #e5e7eb; padding: 64px 0 0 0; margin-top: 0;">
+    <footer class="footer-dark" style="background: #0a0a0a; border-top: 1px solid rgba(255,255,255,0.08); padding: 64px 0 0 0; margin-top: 0;">
         <div class="container">
             <div class="row g-5 pb-5">
                 <!-- Column 1: Logo + Description -->
                 <div class="col-lg-4">
-                    <img src="gemini-svg.svg" alt="CubMart Logo"
-                        style="height: 50px; width: auto; margin-bottom: 20px;">
+                    <img src="gemini-svg.svg" alt="CubMart Logo" id="logo-img" style="height: 50px; width: auto; margin-bottom: 20px;">
                     <p
                         style="font-family: 'Inter', sans-serif; font-size: 14px; color: #9ca3af; line-height: 1.7; margin: 0; max-width: 300px;">
                         A modern e-commerce clothing store — academy project focused on best UI/UX design practices.
@@ -1019,6 +1098,31 @@
         </div>
     </footer>
     <script src="index.js"></script>
+
+    <script>
+        // Scroll-based header color transition
+        (function() {
+            const header = document.querySelector('header');
+            const heroSection = document.querySelector('.w-100[style*="linear-gradient"]');
+            let heroHeight = heroSection ? heroSection.offsetHeight : 600;
+
+            function updateHeader() {
+                const scrolled = window.scrollY;
+                // Header turns dark while over the hero (dark) section
+                if (scrolled < heroHeight - 80) {
+                    header.classList.add('scrolled-dark');
+                } else {
+                    header.classList.remove('scrolled-dark');
+                }
+            }
+
+            window.addEventListener('scroll', updateHeader, { passive: true });
+            window.addEventListener('resize', function() {
+                heroHeight = heroSection ? heroSection.offsetHeight : 600;
+            });
+            updateHeader(); // Initial state
+        })();
+    </script>
 </body>
 
 </html>
