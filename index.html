@@ -430,6 +430,34 @@
 
         /* Star ratings stay gold in dark */
         .ratings-dark [style*="color: #facc15"], .ratings-dark [style*="color: #eab308"] { color: #facc15 !important; }
+
+        /* Classic Wear dark theme */
+        .classic-dark { background-color: #0a0a0a !important; }
+        .classic-dark, .classic-dark * { color: #ffffff !important; }
+        .classic-dark [style*="color: #111827"] { color: #ffffff !important; }
+        .classic-dark [style*="color: #374151"] { color: rgba(255,255,255,0.8) !important; }
+        .classic-dark [style*="color: #4b5563"] { color: rgba(255,255,255,0.7) !important; }
+        .classic-dark [style*="color: #6b7280"] { color: rgba(255,255,255,0.6) !important; }
+        .classic-dark [style*="color: #9ca3af"] { color: rgba(255,255,255,0.5) !important; }
+        .classic-dark [style*="color: #f97316"] { color: #fb923c !important; }
+        .classic-dark [style*="color: #e11d48"] { color: #f43f5e !important; }
+        .classic-dark [style*="color: #facc15"], .classic-dark [style*="color: #eab308"] { color: #facc15 !important; }
+        .classic-dark [style*="background: #f3f4f6"] { background: rgba(255,255,255,0.06) !important; }
+        .classic-dark [style*="background: #ffffff"] { background: rgba(255,255,255,0.04) !important; }
+        .classic-dark [style*="background: #fef3c7"] { background: rgba(251,191,36,0.1) !important; }
+        .classic-dark [style*="background: #e0e7ff"] { background: rgba(129,140,248,0.1) !important; }
+        .classic-dark [style*="border: 1px solid #e5e7eb"] { border-color: rgba(255,255,255,0.1) !important; }
+        .classic-dark [style*="border-top: 1px solid #e5e7eb"] { border-color: rgba(255,255,255,0.08) !important; }
+        .classic-dark [style*="border-bottom: 1px solid #f0f0f0"] { border-color: rgba(255,255,255,0.08) !important; }
+        .classic-dark .product-card { background: rgba(255,255,255,0.04) !important; border-color: rgba(255,255,255,0.08) !important; }
+        .classic-dark .card-img-wrapper { background: rgba(255,255,255,0.03) !important; }
+        .classic-dark .nav-link { color: rgba(255,255,255,0.5) !important; }
+        .classic-dark .nav-link.active { color: #ffffff !important; background-color: rgba(255,255,255,0.1) !important; }
+        .classic-dark .nav-link:hover { color: #ffffff !important; }
+        .classic-dark [style*="background: #111827"] { background: rgba(255,255,255,0.9) !important; color: #0a0a0a !important; }
+        .classic-dark [style*="background: #111827"] * { color: #0a0a0a !important; }
+        .classic-dark [style*="background: #e11d48"] { background: #e11d48 !important; color: #ffffff !important; }
+        .classic-dark [style*="background: #e11d48"] * { color: #ffffff !important; }
 </style>
 </head>
 
@@ -514,7 +542,9 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
             </div>
         </div>
-        <div class="container py-4 d-flex justify-content-between align-items-center">
+                <!-- Classic Wear Dark Section -->
+        <div class="classic-dark" style="background: #0a0a0a; padding: 0;">
+<div class="container py-4 d-flex justify-content-between align-items-center">
             <div>
                 <span style="font-size: 36px; font-weight: 700; color: #111827;">Classic Wear</span>
                 <p style="font-size: 13px; color: #9ca3af; margin: 4px 0 0 0; font-weight: 400;">Curated picks with
@@ -644,6 +674,8 @@
                 </div>
             </div>
         </div>
+        </div> <!-- end Classic Wear Dark Section -->
+
 
         <!-- Sports Wear Section Wrapper -->
         <div id="sports-wear-section" style="transition: background-color 0.6s ease, color 0.6s ease;">
@@ -1108,8 +1140,28 @@
 
             function updateHeader() {
                 const scrolled = window.scrollY;
-                // Header turns dark while over the hero (dark) section
-                if (scrolled < heroHeight - 80) {
+                // Get section positions
+                const ratingsSection = document.querySelector('.ratings-dark');
+                const footerSection = document.querySelector('.footer-dark');
+                const classicSection = document.querySelector('.classic-dark');
+                const sportsSection = document.querySelector('#sports-wear-section');
+
+                let ratingsTop = ratingsSection ? ratingsSection.offsetTop : Infinity;
+                let ratingsBottom = ratingsSection ? ratingsTop + ratingsSection.offsetHeight : Infinity;
+                let footerTop = footerSection ? footerSection.offsetTop : Infinity;
+                let classicTop = classicSection ? classicSection.offsetTop : Infinity;
+                let classicBottom = classicSection ? classicTop + classicSection.offsetHeight : Infinity;
+                let sportsTop = sportsSection ? sportsSection.offsetTop : Infinity;
+                let sportsBottom = sportsSection ? sportsTop + sportsSection.offsetHeight : Infinity;
+
+                // Header is dark when over: hero, classic wear, ratings, or footer
+                const overHero = scrolled < heroHeight - 80;
+                const overClassic = scrolled >= classicTop - 80 && scrolled < classicBottom - 80;
+                const overRatings = scrolled >= ratingsTop - 80 && scrolled < ratingsBottom - 80;
+                const overFooter = scrolled >= footerTop - 80;
+                const overSports = scrolled >= sportsTop - 80 && scrolled < sportsBottom - 80;
+
+                if (overHero || overClassic || overRatings || overFooter) {
                     header.classList.add('scrolled-dark');
                 } else {
                     header.classList.remove('scrolled-dark');
